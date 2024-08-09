@@ -1,0 +1,11 @@
+#imageElement {
+    position: absolute;
+}
+
+#imageCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    /* Makes sure canvas does not interfere with mouse events on the image */
+}
