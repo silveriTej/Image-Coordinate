@@ -11,7 +11,27 @@
   ></canvas>
 </div>-->
 
+<!--<div>
+  <img id="imageElement" [src]="imageSrc" alt="Image for ROI" />
+  <canvas
+    id="imageCanvas"
+    style="position: absolute; top: 0; left: 0; pointer-events: none"
+  ></canvas>
+</div>-->
+
+<!--<div class="canvas-container">
+  <img #imageElement [src]="imageSrc" alt="Image for ROI" style="" />
+  <canvas
+    #imageCanvas
+    style="position: absolute; top: 0; left: 0; pointer-events: none"
+  ></canvas>
+</div>-->
+
 <div>
-  <img id="imageElement" [src]="imageSrc" alt="Image" />
-  <canvas id="imageCanvas"></canvas>
+  <img #imageElement id="imageElement" [src]="imageSrc" alt="Image" />
+  <canvas
+    #imageCanvas
+    id="imageCanvas"
+    style="position: absolute; top: 0; left: 0; pointer-events: none"
+  ></canvas>
 </div>

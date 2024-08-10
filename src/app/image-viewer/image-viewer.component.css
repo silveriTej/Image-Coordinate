@@ -1,5 +1,8 @@
 #imageElement {
     position: absolute;
+    width:100%;
+    height: 100%;
+
 }
 
 #imageCanvas {
@@ -9,3 +12,5 @@
     pointer-events: none;
     /* Makes sure canvas does not interfere with mouse events on the image */
 }
+
+
