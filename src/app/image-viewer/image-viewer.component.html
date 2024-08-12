@@ -27,11 +27,22 @@
   ></canvas>
 </div>-->
 
-<div>
-  <img #imageElement id="imageElement" [src]="imageSrc" alt="Image" />
+<!--<div style="position: relative; width: 500px; height: 500px">
+  <img
+    #imageElement
+    id="imageElement"
+    [src]="imageSrc"
+    alt="Image"
+    style="display: none"
+  />
   <canvas
     #imageCanvas
     id="imageCanvas"
-    style="position: absolute; top: 0; left: 0; pointer-events: none"
+    style="position: absolute; top: 0; left: 0"
   ></canvas>
+</div>-->
+
+<div class="image-container">
+  <img #imageElement [src]="imageSrc" alt="Image" class="image" />
+  <canvas #imageCanvas class="canvas"></canvas>
 </div>

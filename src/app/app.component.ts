@@ -306,7 +306,7 @@ import { ChangeDetectorRef } from '@angular/core';
 // }
 export class AppComponent implements OnInit {
   title = 'ImageCoordinate';
-  imageSrc: string = ''; // The image source path
+  imageSrc = 'maingate.jpg'; // The image source path
   coordinates: { x: number; y: number }[] = [];
   objectData: any[] = []; // To handle object data
 
@@ -317,8 +317,8 @@ export class AppComponent implements OnInit {
     const page = 1;
     const size = 10;
     const departmentName = 'none';
-    const fromDate = '2024-08-05 00:00:00';
-    const toDate = '2024-08-05 23:59:59';
+    const fromDate = '2024-08-09 00:00:00';
+    const toDate = '2024-08-09 23:59:59';
 
     this.apiService
       .getPages(page, size, departmentName, fromDate, toDate)
@@ -333,7 +333,7 @@ export class AppComponent implements OnInit {
               if (item.crowdcountdetails && item.crowdcountdetails.bb_box) {
                 const bbox = item.crowdcountdetails.bb_box;
                 this.coordinates = this.parseRoiBbox(bbox);
-                this.imageSrc = this.apiService.getImageUrl(item.imagename[0]);
+                // this.imageSrc = this.apiService.getImageUrl(item.imagename[0]);
                 this.objectData = item.object_data; // Assign object data
 
                 this.cdr.detectChanges(); // Trigger change detection to update the view

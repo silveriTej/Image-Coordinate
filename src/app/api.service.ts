@@ -47,8 +47,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://10.11.1.160:5001/datewiseCC';
-  private imageurl = 'http://10.11.1.160:5001/image/CRDCNT/';
+  private apiUrl = 'http://10.11.1.160:5000/datewiseCC';
+  private imageurl = 'http://10.11.1.160:5000/image/CRDCNT/';
 
   constructor(private http: HttpClient) {}
 
