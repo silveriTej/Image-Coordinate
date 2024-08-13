@@ -324,10 +324,10 @@ export class AppComponent implements OnInit {
       .getPages(page, size, departmentName, fromDate, toDate)
       .subscribe(
         (data) => {
-          console.log('API Data:', data);
+          // console.log('API Data:', data);
 
           if (data && Array.isArray(data.message)) {
-            console.log('Message Array:', data.message);
+            // console.log('Message Array:', data.message);
 
             for (const item of data.message) {
               if (item.crowdcountdetails && item.crowdcountdetails.bb_box) {

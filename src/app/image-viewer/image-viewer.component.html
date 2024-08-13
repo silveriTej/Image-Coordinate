@@ -43,6 +43,12 @@
 </div>-->
 
 <div class="image-container">
-  <img #imageElement [src]="imageSrc" alt="Image" class="image" />
+  <img
+    #imageElement
+    [src]="imageSrc"
+    alt="Image"
+    class="image"
+    style="display: none"
+  />
   <canvas #imageCanvas class="canvas"></canvas>
 </div>
