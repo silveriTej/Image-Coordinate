@@ -42,7 +42,7 @@
   ></canvas>
 </div>-->
 
-<div class="image-container">
+<!--<div class="image-container">
   <img
     #imageElement
     [src]="imageSrc"
@@ -51,4 +51,38 @@
     style="display: none"
   />
   <canvas #imageCanvas class="canvas"></canvas>
+</div>-->
+
+<!--<div
+  *ngFor="let imageData of imagesData; let i = index"
+  class="image-container"
+>
+  <img
+    #imageElement
+    [src]="imageData.imageSrc"
+    alt="Image {{ i }}"
+    class="image"
+    style="display: none"
+  />
+  <canvas #imageCanvas class="canvas"></canvas>
+</div>-->
+
+<!--<div *ngFor="let imageData of imagesData; let i = index">
+  <div class="image-container">
+    <img #imageElement [src]="imageData.imageSrc" alt="Image" />
+    <canvas #imageCanvas></canvas>
+  </div>
+</div>-->
+
+<div *ngFor="let imageData of imagesData; let i = index" class="image-wrapper">
+  <div class="image-container">
+    <img
+      #imageElement
+      [src]="imageData.imageSrc"
+      alt="Image {{ i + 1 }}"
+      class="image"
+      style="display: none"
+    />
+    <canvas #imageCanvas class="canvas"></canvas>
+  </div>
 </div>

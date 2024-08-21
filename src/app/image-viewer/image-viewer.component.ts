@@ -9,6 +9,8 @@ import {
   OnChanges,
   Inject,
   PLATFORM_ID,
+  ViewChildren,
+  QueryList,
 } from '@angular/core';
 
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -4054,20 +4056,191 @@ import { HttpClientModule } from '@angular/common/http';
 //     }
 //   }
 // }
+// export class ImageViewerComponent implements OnInit, AfterViewInit, OnChanges {
+//   @Input() imageSrc: string = '';
+//   @Input() coordinates: { x: number; y: number }[] = []; // For lines
+//   @Input() objectData: any[] = []; // For bounding boxes or polygons
+//   @Input() expandToFit: boolean = false; // Whether to expand drawings to fit the canvas
+
+//   @ViewChild('imageElement', { static: true })
+//   imageElement!: ElementRef<HTMLImageElement>;
+//   @ViewChild('imageCanvas', { static: true })
+//   imageCanvas!: ElementRef<HTMLCanvasElement>;
+
+//   private imageLoaded: boolean = false;
+//   private imageNaturalWidth: number = 0;
+//   private imageNaturalHeight: number = 0;
+
+//   ngOnInit(): void {
+//     console.log('ngOnInit called');
+//   }
+
+//   ngAfterViewInit(): void {
+//     console.log('ngAfterViewInit called');
+//     this.setupCanvas();
+//   }
+
+//   ngOnChanges(changes: SimpleChanges): void {
+//     if (
+//       (changes['coordinates'] ||
+//         changes['objectData'] ||
+//         changes['expandToFit']) &&
+//       this.imageLoaded
+//     ) {
+//       // console.log('Updating canvas with new data.');
+//       // this.redrawCanvas();
+//     }
+//   }
+
+//   setupCanvas(): void {
+//     const image = this.imageElement.nativeElement;
+//     const canvas = this.imageCanvas.nativeElement;
+
+//     image.onload = () => {
+//       console.log('Image loaded successfully');
+//       this.imageNaturalWidth = image.naturalWidth;
+//       this.imageNaturalHeight = image.naturalHeight;
+//       this.initializeCanvas(canvas, image);
+//       this.imageLoaded = true;
+//       this.redrawCanvas();
+//     };
+
+//     if (image.complete && !this.imageLoaded) {
+//       // If the image is already loaded (cached)
+//       this.imageNaturalWidth = image.naturalWidth;
+//       this.imageNaturalHeight = image.naturalHeight;
+//       this.initializeCanvas(canvas, image);
+//       this.imageLoaded = true;
+//       this.redrawCanvas();
+//     } else {
+//       image.onerror = () => {
+//         console.error('Error loading image');
+//       };
+//     }
+//   }
+
+//   initializeCanvas(canvas: HTMLCanvasElement, image: HTMLImageElement): void {
+//     // Set desired canvas size based on the desired dimensions
+//     const desiredWidth = 400; // Set your desired canvas width here
+//     const desiredHeight = 300; // Set your desired canvas height here
+
+//     // Scale the image to fit the canvas size
+//     const aspectRatio = image.naturalWidth / image.naturalHeight;
+//     let scaledWidth = desiredWidth;
+//     let scaledHeight = desiredHeight;
+
+//     if (this.expandToFit) {
+//       if (aspectRatio > 1) {
+//         scaledHeight = desiredWidth / aspectRatio;
+//       } else {
+//         scaledWidth = desiredHeight * aspectRatio;
+//       }
+//     }
+
+//     // Set canvas width and height to the scaled dimensions
+//     canvas.width = scaledWidth;
+//     canvas.height = scaledHeight;
+
+//     console.log('Canvas dimensions set to:', canvas.width, canvas.height);
+
+//     // Ensure the canvas element scales with the image dimensions in the UI
+//     canvas.style.width = `${canvas.width}px`;
+//     canvas.style.height = `${canvas.height}px`;
+//   }
+
+//   redrawCanvas(): void {
+//     const canvas = this.imageCanvas.nativeElement;
+//     const context = canvas.getContext('2d');
+//     const image = this.imageElement.nativeElement;
+
+//     if (context && image) {
+//       // Clear previous drawings
+//       context.clearRect(0, 0, canvas.width, canvas.height);
+
+//       // Draw the image scaled to the canvas size
+//       context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+//       // Draw lines and object data
+//       this.drawLinesOnCanvas(context);
+//       this.drawObjectDataOnCanvas(context);
+//     } else {
+//       console.error('Canvas context or image is not available.');
+//     }
+//   }
+
+//   drawLinesOnCanvas(context: CanvasRenderingContext2D): void {
+//     if (context && this.coordinates.length > 0) {
+//       context.beginPath();
+//       this.coordinates.forEach((coord, index) => {
+//         // Scale the coordinates to fit the canvas size
+//         const x =
+//           ((coord.x / this.imageNaturalWidth) * this.imageNaturalWidth) / 2.4;
+//         console.log('x value', x);
+
+//         const y =
+//           ((coord.y / this.imageNaturalHeight) * this.imageNaturalHeight) / 1.8;
+//         console.log('y value ', y);
+
+//         // console.log('Drawing line to:', { x, y });
+
+//         if (index === 0) {
+//           context.moveTo(x, y);
+//         } else {
+//           context.lineTo(x, y);
+//         }
+//       });
+
+//       context.closePath();
+//       context.strokeStyle = 'blue';
+//       context.lineWidth = 2;
+//       context.stroke();
+//     }
+//   }
+
+//   drawObjectDataOnCanvas(context: CanvasRenderingContext2D): void {
+//     if (context && this.objectData.length > 0) {
+//       this.objectData.forEach((object: any) => {
+//         if (object && object.bbox && Array.isArray(object.bbox)) {
+//           context.beginPath();
+
+//           object.bbox.forEach(
+//             (point: { X: number; Y: number }, index: number) => {
+//               // Scale the polygon points to fit the canvas size
+//               const x =
+//                 (point.X / this.imageNaturalWidth) * context.canvas.width;
+//               const y =
+//                 (point.Y / this.imageNaturalHeight) * context.canvas.height;
+
+//               console.log('Drawing polygon point:', { x, y });
+
+//               if (index === 0) {
+//                 context.moveTo(x, y);
+//               } else {
+//                 context.lineTo(x, y);
+//               }
+//             }
+//           );
+
+//           context.closePath();
+//           context.strokeStyle = 'red';
+//           context.lineWidth = 2;
+//           context.stroke();
+//         }
+//       });
+//     }
+//   }
+// }
 export class ImageViewerComponent implements OnInit, AfterViewInit, OnChanges {
-  @Input() imageSrc: string = '';
-  @Input() coordinates: { x: number; y: number }[] = []; // For lines
-  @Input() objectData: any[] = []; // For bounding boxes or polygons
-  @Input() expandToFit: boolean = false; // Whether to expand drawings to fit the canvas
+  @Input() imagesData: any[] = []; // Array to store multiple image data
 
-  @ViewChild('imageElement', { static: true })
-  imageElement!: ElementRef<HTMLImageElement>;
-  @ViewChild('imageCanvas', { static: true })
-  imageCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChildren('imageElement')
+  imageElements!: QueryList<ElementRef<HTMLImageElement>>;
+  @ViewChildren('imageCanvas')
+  imageCanvases!: QueryList<ElementRef<HTMLCanvasElement>>;
 
-  private imageLoaded: boolean = false;
-  private imageNaturalWidth: number = 0;
-  private imageNaturalHeight: number = 0;
+  private imageLoaded: boolean[] = [];
+  private imageNaturalWidth: number[] = [];
+  private imageNaturalHeight: number[] = [];
 
   ngOnInit(): void {
     console.log('ngOnInit called');
@@ -4075,113 +4248,124 @@ export class ImageViewerComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     console.log('ngAfterViewInit called');
-    this.setupCanvas();
+    this.setupCanvases();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      (changes['coordinates'] ||
-        changes['objectData'] ||
-        changes['expandToFit']) &&
-      this.imageLoaded
-    ) {
-      // console.log('Updating canvas with new data.');
-      // this.redrawCanvas();
+    if (changes['imagesData'] && this.imageLoaded.every(Boolean)) {
+      this.redrawCanvases();
     }
   }
 
-  setupCanvas(): void {
-    const image = this.imageElement.nativeElement;
-    const canvas = this.imageCanvas.nativeElement;
+  setupCanvases(): void {
+    this.imageElements.forEach((imageElement, index) => {
+      const image = imageElement.nativeElement;
+      const canvas = this.imageCanvases.toArray()[index].nativeElement;
 
-    image.onload = () => {
-      console.log('Image loaded successfully');
-      this.imageNaturalWidth = image.naturalWidth;
-      this.imageNaturalHeight = image.naturalHeight;
-      this.initializeCanvas(canvas, image);
-      this.imageLoaded = true;
-      this.redrawCanvas();
-    };
-
-    if (image.complete && !this.imageLoaded) {
-      // If the image is already loaded (cached)
-      this.imageNaturalWidth = image.naturalWidth;
-      this.imageNaturalHeight = image.naturalHeight;
-      this.initializeCanvas(canvas, image);
-      this.imageLoaded = true;
-      this.redrawCanvas();
-    } else {
-      image.onerror = () => {
-        console.error('Error loading image');
+      image.onload = () => {
+        console.log('Image loaded successfully');
+        this.imageNaturalWidth[index] = image.naturalWidth;
+        this.imageNaturalHeight[index] = image.naturalHeight;
+        this.initializeCanvas(canvas, image, index);
+        this.imageLoaded[index] = true;
+        this.redrawCanvas(index);
       };
-    }
+
+      if (image.complete && !this.imageLoaded[index]) {
+        // If the image is already loaded (cached)
+        this.imageNaturalWidth[index] = image.naturalWidth;
+        this.imageNaturalHeight[index] = image.naturalHeight;
+        this.initializeCanvas(canvas, image, index);
+        this.imageLoaded[index] = true;
+        this.redrawCanvas(index);
+      } else {
+        image.onerror = () => {
+          console.error('Error loading image');
+        };
+      }
+    });
   }
 
-  initializeCanvas(canvas: HTMLCanvasElement, image: HTMLImageElement): void {
-    // Set desired canvas size based on the desired dimensions
-    const desiredWidth = 400; // Set your desired canvas width here
-    const desiredHeight = 300; // Set your desired canvas height here
-
-    // Scale the image to fit the canvas size
+  initializeCanvas(
+    canvas: HTMLCanvasElement,
+    image: HTMLImageElement,
+    index: number
+  ): void {
+    const desiredWidth = 400;
+    const desiredHeight = 300;
     const aspectRatio = image.naturalWidth / image.naturalHeight;
     let scaledWidth = desiredWidth;
     let scaledHeight = desiredHeight;
 
-    if (this.expandToFit) {
-      if (aspectRatio > 1) {
-        scaledHeight = desiredWidth / aspectRatio;
-      } else {
-        scaledWidth = desiredHeight * aspectRatio;
-      }
+    // Scale the image to fit the canvas size
+    if (aspectRatio > 1) {
+      scaledHeight = desiredWidth / aspectRatio;
+    } else {
+      scaledWidth = desiredHeight * aspectRatio;
     }
 
-    // Set canvas width and height to the scaled dimensions
     canvas.width = scaledWidth;
     canvas.height = scaledHeight;
 
-    console.log('Canvas dimensions set to:', canvas.width, canvas.height);
+    // console.log(
+    //   `Canvas dimensions for image ${index}:`,
+    //   canvas.width,
+    //   canvas.height
+    // );
 
-    // Ensure the canvas element scales with the image dimensions in the UI
     canvas.style.width = `${canvas.width}px`;
     canvas.style.height = `${canvas.height}px`;
   }
 
-  redrawCanvas(): void {
-    const canvas = this.imageCanvas.nativeElement;
+  redrawCanvas(index: number): void {
+    const canvas = this.imageCanvases.toArray()[index].nativeElement;
     const context = canvas.getContext('2d');
-    const image = this.imageElement.nativeElement;
+    const image = this.imageElements.toArray()[index].nativeElement;
 
     if (context && image) {
-      // Clear previous drawings
       context.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw the image scaled to the canvas size
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-      // Draw lines and object data
-      this.drawLinesOnCanvas(context);
-      this.drawObjectDataOnCanvas(context);
+      const coordinates = this.imagesData[index].coordinates || [];
+      const objectData = this.imagesData[index].objectData || [];
+
+      this.drawLinesOnCanvas(context, coordinates, index);
+      this.drawObjectDataOnCanvas(context, objectData, index);
     } else {
       console.error('Canvas context or image is not available.');
     }
   }
 
-  drawLinesOnCanvas(context: CanvasRenderingContext2D): void {
-    if (context && this.coordinates.length > 0) {
+  redrawCanvases(): void {
+    this.imagesData.forEach((_, index) => {
+      this.redrawCanvas(index);
+    });
+  }
+
+  drawLinesOnCanvas(
+    context: CanvasRenderingContext2D,
+    coordinates: { x: number; y: number }[],
+    index: number
+  ): void {
+    if (context && coordinates.length > 0) {
       context.beginPath();
-      this.coordinates.forEach((coord, index) => {
-        // Scale the coordinates to fit the canvas size
+      coordinates.forEach((coord, idx) => {
+        // const x =
+        //   (coord.x / this.imageNaturalWidth[index]) * context.canvas.width;
+        // const y =
+        //   (coord.y / this.imageNaturalHeight[index]) * context.canvas.height;
+
         const x =
-          ((coord.x / this.imageNaturalWidth) * this.imageNaturalWidth) / 2.4;
+          ((coord.x / this.imageNaturalWidth[index]) *
+            this.imageNaturalWidth[index]) /
+          2.4;
         console.log('x value', x);
 
         const y =
-          ((coord.y / this.imageNaturalHeight) * this.imageNaturalHeight) / 1.8;
-        console.log('y value ', y);
-
-        // console.log('Drawing line to:', { x, y });
-
-        if (index === 0) {
+          ((coord.y / this.imageNaturalHeight[index]) *
+            this.imageNaturalHeight[index]) /
+          2.4;
+        if (idx === 0) {
           context.moveTo(x, y);
         } else {
           context.lineTo(x, y);
@@ -4195,23 +4379,28 @@ export class ImageViewerComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  drawObjectDataOnCanvas(context: CanvasRenderingContext2D): void {
-    if (context && this.objectData.length > 0) {
-      this.objectData.forEach((object: any) => {
+  drawObjectDataOnCanvas(
+    context: CanvasRenderingContext2D,
+    objectData: any[],
+    index: number
+  ): void {
+    if (context && objectData.length > 0) {
+      objectData.forEach((object: any) => {
         if (object && object.bbox && Array.isArray(object.bbox)) {
           context.beginPath();
 
           object.bbox.forEach(
-            (point: { X: number; Y: number }, index: number) => {
-              // Scale the polygon points to fit the canvas size
+            (point: { X: number; Y: number }, idx: number) => {
               const x =
-                (point.X / this.imageNaturalWidth) * context.canvas.width;
+                (point.X / this.imageNaturalWidth[index]) *
+                context.canvas.width *
+                2.4;
               const y =
-                (point.Y / this.imageNaturalHeight) * context.canvas.height;
+                (point.Y / this.imageNaturalHeight[index]) *
+                context.canvas.height *
+                2.4;
 
-              console.log('Drawing polygon point:', { x, y });
-
-              if (index === 0) {
+              if (idx === 0) {
                 context.moveTo(x, y);
               } else {
                 context.lineTo(x, y);

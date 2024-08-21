@@ -15,18 +15,17 @@
  */
 
  /* image-viewer.component.css */
- .image-container {
+  .image-container {
      position: relative;
      width: 1000px;
-     /* Fixed width */
+     
      height: 1000px;
-     /* Fixed height */
+     
  }
 
  .image {
      display: block;
-     /* width: 1920px;
-     height: 1080px; */
+   
 
  }
 
@@ -41,4 +40,5 @@
      border: 1px solid black;
      
         
- }
+ } 
+

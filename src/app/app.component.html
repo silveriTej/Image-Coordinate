@@ -4,11 +4,15 @@
   [coordinates]="coordinates"
 ></app-image-viewer>-->
 
-<app-image-viewer
+<!--<app-image-viewer
   class="image"
   [imageSrc]="imageSrc"
   [objectData]="objectData"
   [coordinates]="coordinates"
 >
-</app-image-viewer>
+</app-image-viewer>-->
 <!-- [coordinates]="coordinates"-->
+
+<div *ngFor="let imageData of imagesData">
+  <app-image-viewer [imagesData]="imagesData"></app-image-viewer>
+</div>
