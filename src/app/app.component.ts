@@ -1,91 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
-// import { ParentComponent } from './parent/parent.component';
-// import { ImageViewerComponent } from './image-viewer/image-viewer.component';
-// import { ApiService } from './api.service';
-// import { HttpClientModule } from '@angular/common/http';
-// import { ChangeDetectorRef } from '@angular/core';
-
-// @Component({
-//   selector: 'app-root',
-//   standalone: true,
-//   imports: [
-//     RouterOutlet,
-//     ParentComponent,
-//     ImageViewerComponent,
-//     HttpClientModule,
-//   ],
-//   providers: [ApiService],
-//   templateUrl: './app.component.html',
-//   styleUrl: './app.component.css',
-// })
-// export class AppComponent implements OnInit {
-//   title = 'ImageCoordinate';
-//   imageSrc = 'test.jpeg'; // Provide the path to your image
-//   coordinates: { x: number; y: number }[] = [];
-
-//   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
-
-//   ngOnInit(): void {
-//     this.apiService.getPosts().subscribe(
-//       (data) => {
-//         console.log('API Data:', data);
-
-//         if (data && Array.isArray(data['message'])) {
-//           console.log('Message Array:', data['message']);
-
-//           for (const item of data['message']) {
-//             if (
-//               item &&
-//               item['analytics_data'] &&
-//               item['analytics_data']['data'] &&
-//               Array.isArray(item['analytics_data']['data'])
-//             ) {
-//               const analyticsData = item['analytics_data'];
-//               console.log('Analytics Data:', analyticsData);
-
-//               if (analyticsData['data'].length > 0) {
-//                 const dataItem = analyticsData['data'][0];
-//                 console.log('First Data Item:', dataItem);
-
-//                 const bbox = dataItem['ROI_bbox'];
-//                 console.log('ROI_bbox:', bbox);
-
-//                 if (bbox) {
-//                   this.coordinates = this.parseRoiBbox(bbox);
-//                   console.log('Parsed Coordinates:', this.coordinates);
-
-//                   // Trigger change detection to ensure data binding
-//                   this.cdr.detectChanges();
-//                   break;
-//                 }
-//               }
-//             }
-//           }
-//         } else {
-//           console.warn('message property is missing or not an array');
-//         }
-//       },
-//       (error) => {
-//         console.error('Error fetching data:', error);
-//       }
-//     );
-//   }
-
-//   parseRoiBbox(bbox: string): { x: number; y: number }[] {
-//     const points = bbox.split(';').filter((p) => p !== '');
-//     const coordinates: { x: number; y: number }[] = [];
-
-//     for (let i = 0; i < points.length; i += 2) {
-//       const x = parseInt(points[i], 10);
-//       const y = parseInt(points[i + 1], 10);
-//       coordinates.push({ x, y });
-//     }
-
-//     return coordinates;
-//   }
-// }
-
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ParentComponent } from './parent/parent.component';
@@ -94,6 +6,7 @@ import { ApiService } from './api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -108,131 +21,16 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-// export class AppComponent implements OnInit {
-//   title = 'ImageCoordinate';
-//   imageSrc: string = ''; // The image source path
-//   coordinates: { x: number; y: number }[] = [];
-//   objectData: any[] = []; // To handle object data
-
-//   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
-
-//   ngOnInit(): void {
-//     // Replace with the actual parameters for your POST request
-//     const page = 1;
-//     const size = 10;
-//     const departmentName = 'none';
-//     const fromDate = '2024-08-15 00:00:00';
-//     const toDate = '2024-08-15 23:59:59';
-
-//     this.apiService
-//       .getPages(page, size, departmentName, fromDate, toDate)
-//       .subscribe(
-//         (data) => {
-//           // console.log('API Data:', data);
-
-//           if (data && Array.isArray(data.message)) {
-//             // console.log('Message Array:', data.message);
-
-//             for (const item of data.message) {
-//               if (item.crowdcountdetails && item.crowdcountdetails.bb_box) {
-//                 const bbox = item.crowdcountdetails.bb_box;
-//                 this.coordinates = this.parseRoiBbox(bbox);
-//                 this.imageSrc = this.apiService.getImageUrl(item.imagename[0]);
-//                 this.objectData = item.object_data; // Assign object data
-
-//                 this.cdr.detectChanges(); // Trigger change detection to update the view
-//                 break; // Assuming you want to use the first matching data
-//               }
-//             }
-//           } else {
-//             console.warn('No valid data found');
-//           }
-//         },
-//         (error) => {
-//           console.error('Error fetching data:', error);
-//         }
-//       );
-//   }
-
-//   // Function to parse the ROI_bbox string into coordinates
-//   private parseRoiBbox(bbox: string): { x: number; y: number }[] {
-//     const points = bbox.split(';').filter((p) => p !== '');
-//     const coordinates: { x: number; y: number }[] = [];
-
-//     for (let i = 0; i < points.length; i += 2) {
-//       const x = parseInt(points[i], 10);
-//       const y = parseInt(points[i + 1], 10);
-//       coordinates.push({ x, y });
-//     }
-
-//     return coordinates;
-//   }
-// }
-// export class AppComponent implements OnInit {
-//   title = 'ImageCoordinate';
-//   imageSrc: string = '';
-//   coordinates: { x: number; y: number }[] = [];
-//   objectData: any[] = [];
-
-//   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
-
-//   ngOnInit(): void {
-//     const page = 1;
-//     const size = 10;
-//     const departmentName = 'none';
-//     const fromDate = '2024-08-15 00:00:00';
-//     const toDate = '2024-08-15 23:59:59';
-
-//     this.apiService
-//       .getPages(page, size, departmentName, fromDate, toDate)
-//       .subscribe(
-//         (data) => {
-//           if (data && Array.isArray(data.message)) {
-//             for (const item of data.message) {
-//               if (item.crowdcountdetails && item.crowdcountdetails.bb_box) {
-//                 const bbox = item.crowdcountdetails.bb_box;
-//                 this.coordinates = this.parseRoiBbox(bbox);
-//                 this.imageSrc = this.apiService.getImageUrl(item.imagename);
-//                 this.objectData = item.object_data;
-
-//                 this.cdr.detectChanges();
-//                 break;
-//               }
-//             }
-//           } else {
-//             console.warn('No valid data found');
-//           }
-//         },
-//         (error) => {
-//           console.error('Error fetching data:', error);
-//         }
-//       );
-//   }
-
-//   parseRoiBbox(bbox: string): { x: number; y: number }[] {
-//     const points = bbox.split(';').filter((p) => p !== '');
-//     const coordinates: { x: number; y: number }[] = [];
-
-//     for (let i = 0; i < points.length; i += 2) {
-//       const x = parseInt(points[i], 10);
-//       const y = parseInt(points[i + 1], 10);
-//       coordinates.push({ x, y });
-//     }
-
-//     return coordinates;
-//   }
-// }
 export class AppComponent implements OnInit {
   title = 'ImageCoordinate';
-  // imagesData: {
-  //   imageSrc: string;
-  //   coordinates: { x: number; y: number }[];
-  //   objectData: any[];
-  // }[] = [];
-  imagesData: {
-    imageSrc: string;
-    coordinates: { x: number; y: number }[];
-    objectData: any[];
+
+  // Define violationDetails as an array of objects containing imagesData
+  violationDetails: {
+    imagesData: {
+      imageSrc: string;
+      shapes: { coordinates: { x: number; y: number }[] }[];
+      objectData: any[];
+    }[];
   }[] = [];
 
   constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
@@ -242,7 +40,7 @@ export class AppComponent implements OnInit {
     const size = 10;
     const departmentName = 'none';
     const fromDate = '2024-08-17 00:00:00';
-    const toDate = '2024-08-17 23:59:59';
+    const toDate = '2024-10-05 23:59:59';
 
     this.apiService
       .getPages(page, size, departmentName, fromDate, toDate)
@@ -250,15 +48,22 @@ export class AppComponent implements OnInit {
         (data) => {
           if (data && Array.isArray(data.message)) {
             for (const item of data.message) {
-              console.log(data.message);
-
               if (item.crowdcountdetails && item.crowdcountdetails.bb_box) {
-                const bbox = item.crowdcountdetails.bb_box;
-                const coordinates = this.parseRoiBbox(bbox);
-                const imageSrc = this.apiService.getImageUrl(item.imagename);
-                const objectData = item.object_data;
+                const bboxes = item.crowdcountdetails.bb_box;
+                if (typeof bboxes === 'string') {
+                  const shapes = this.parseRoiBboxes(bboxes);
+                  const imageSrc = this.apiService.getImageUrl(item.imagename);
+                  const objectData = item.object_data;
 
-                this.imagesData.push({ imageSrc, coordinates, objectData });
+                  // Push data to violationDetails, ensuring imagesData is an array
+                  this.violationDetails.push({
+                    imagesData: [{ imageSrc, shapes, objectData }],
+                  });
+
+                  console.log('push', this.violationDetails);
+                } else {
+                  console.warn('bboxes is not a string:', bboxes);
+                }
               }
             }
 
@@ -273,16 +78,29 @@ export class AppComponent implements OnInit {
       );
   }
 
-  parseRoiBbox(bbox: string): { x: number; y: number }[] {
-    const points = bbox.split(';').filter((p) => p !== '');
-    const coordinates: { x: number; y: number }[] = [];
+  parseRoiBboxes(bboxes: string): { coordinates: { x: number; y: number }[] }[] {
+    const shapeStrings = bboxes.split('|').filter((s) => s.trim() !== '');
+    const shapes: { coordinates: { x: number; y: number }[] }[] = [];
 
-    for (let i = 0; i < points.length; i += 2) {
-      const x = parseInt(points[i], 10);
-      const y = parseInt(points[i + 1], 10);
-      coordinates.push({ x, y });
-    }
+    shapeStrings.forEach((shapeString) => {
+      const points = shapeString.split(';').filter((p) => p.trim() !== '');
+      const coordinates: { x: number; y: number }[] = [];
 
-    return coordinates;
+      for (let i = 0; i < points.length; i += 2) {
+        const x = parseInt(points[i], 10);
+        const y = parseInt(points[i + 1], 10);
+        if (!isNaN(x) && !isNaN(y)) {
+          coordinates.push({ x, y });
+        }
+      }
+
+      if (coordinates.length > 0) {
+        shapes.push({ coordinates });
+      }
+    });
+
+    return shapes.map((shape) => ({
+      coordinates: shape.coordinates.map((coord) => ({ x: coord.x, y: coord.y })),
+    }));
   }
 }

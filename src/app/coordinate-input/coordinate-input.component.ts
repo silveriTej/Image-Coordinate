@@ -12,7 +12,7 @@ export class CoordinateInputComponent implements OnInit {
   // Define hardcoded coordinates
   coordinates = [
     { x1: 50, y1: 50, x2: 150, y2: 150 }, // Coordinates for a filled rectangle
-    { x1: 200, y1: 200, x2: 300, y2: 300 }, // Another filled rectangle
+    { x1: 200, y1: 200, x2: 300, y2: 300 }, 
   ];
 
   @Output() coordinatesChanged = new EventEmitter<

@@ -12,7 +12,6 @@
 >
 </app-image-viewer>-->
 <!-- [coordinates]="coordinates"-->
-
-<div *ngFor="let imageData of imagesData">
-  <app-image-viewer [imagesData]="imagesData"></app-image-viewer>
+<div *ngFor="let violation of violationDetails">
+  <app-image-viewer [imagesData]="violation.imagesData"></app-image-viewer>
 </div>

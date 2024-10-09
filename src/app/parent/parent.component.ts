@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
 import { CoordinateInputComponent } from '../coordinate-input/coordinate-input.component';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-parent',
   standalone: true,
-  imports: [ImageViewerComponent, CoordinateInputComponent],
+  imports: [CommonModule, ImageViewerComponent, CoordinateInputComponent], // Added CommonModule
   templateUrl: './parent.component.html',
-  styleUrl: './parent.component.css',
+  styleUrls: ['./parent.component.css'],
 })
 export class ParentComponent {
   imageSrc = 'test.jpeg';
